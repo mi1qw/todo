@@ -1,0 +1,6 @@
+logging.level:
+  root: info
+spring:
+  thymeleaf:
+    cache: false
+    template-resolver-order: 0

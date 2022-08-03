@@ -1,0 +1,48 @@
+.active-menu {
+    border-bottom: 4px solid rgb(100, 189, 222);
+}
+
+.non-active:hover {
+    border-bottom: 4px solid rgba(100, 189, 222);
+    transform: scale(1.01);
+    border-radius: 4px;
+    box-shadow: 0 8px 25px 0px rgba(0, 0, 0, 0.225);
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.7s;
+    transition-duration: 0.7s;
+}
+
+.select-item a {
+    text-decoration: none;
+}
+
+tr td:nth-child(2) a {
+    color: black;
+    display: block;
+}
+
+tr td:hover a {
+    color: #ba0000;
+}
+
+.select-item:hover {
+    border-bottom: 2px solid rgba(100, 189, 222);
+    background: -webkit-linear-gradient(#ffffff, #808080);
+    background: -moz-linear-gradient(#ffffff, #808080);
+    background: -o-linear-gradient(#ffffff, #808080);
+    background: linear-gradient(#ffffff, #808080);
+    background-size: 1px 600px;
+}
+
+.hr-line {
+    margin: 15px 0;
+    padding: 0;
+    height: 0;
+    border: none;
+    border-top: 1px solid #333;
+}
+
+.smaller {
+    transform: scale(0.8) !important;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TODO </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+        crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+          crossorigin="anonymous"></script>
+  <link rel='stylesheet'
+        href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+  <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Показать</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link "
+          th:classappend="${filtr!='yes' && filtr!='no'}?'active-menu':'non-active'"
+          th:href="@{/all}">Все</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             th:classappend="${filtr=='yes'}?'active-menu':'non-active'"
+             th:href="@{/yes}">Выполненные</a>
+        </li>
+        <li class=" nav-item">
+          <a class="nav-link"
+             th:classappend="${filtr=='no'}?'active-menu':'non-active'"
+             th:href="@{/no}">Новые</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container position-relative">
+  <table class="table caption-top">
+    <caption>List of TODO</caption>
+    <thead class="table-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Created</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="select-item" th:each="item,iterStat :${items}">
+      <th scope="row" th:text="${iterStat.count}">0</th>
+      <td>
+        <a th:href="@{|/item/${item.id}|}" th:text="${item.title}"></a>
+      </td>
+      <td th:text=" ${item.created}">Mark</td>
+      <td>
+        <span class='bi bi-check-circle-fill' style='color: green'
+              th:if="${item.status}"></span>
+        <span class='bi bi-clock-history' style='color: blue'
+              th:if="${!item.status}"></span>
+      </td>
+      <td><a th:href="@{|/item/${item.id}/edit|}">Edit_<i class='bi bi-pencil'></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="position-absolute bottom-0 end-0"
+       style='transform: translate(-350%,120%);'>
+    <a class='bi bi-plus-circle-fill' style="font-size: 300%;color: #ff00aa"
+       th:href="@{/newItem}"
+    ></a>
+  </div>
+</div>
+</body>
+</html>
