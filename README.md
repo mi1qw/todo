@@ -8,7 +8,7 @@
 
 ## Middle Java на [Job4j.ru](http://Job4j.ru)
 
-##Проект TODO
+## Проект TODO
 #### Hibernate,thymeleaf, spring-boot
 
 дописать...

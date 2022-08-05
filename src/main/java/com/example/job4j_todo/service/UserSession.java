@@ -8,6 +8,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @Data
 @Service
 @SessionScope
-public class ItemService {
+public class UserSession {
     private Item item;
+    private String name;
 }

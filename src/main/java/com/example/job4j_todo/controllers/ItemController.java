@@ -2,7 +2,7 @@ package com.example.job4j_todo.controllers;
 
 import com.example.job4j_todo.model.Item;
 import com.example.job4j_todo.persistence.ItemStore;
-import com.example.job4j_todo.service.ItemService;
+import com.example.job4j_todo.service.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +14,17 @@ import java.time.ZoneId;
 @RequestMapping("/item")
 public class ItemController {
     private final ItemStore store;
-    private final ItemService service;
+    private final UserSession session;
 
-    public ItemController(final ItemStore store, final ItemService service) {
+    public ItemController(final ItemStore store, final UserSession session) {
         this.store = store;
-        this.service = service;
+        this.session = session;
     }
 
     @GetMapping("/{id}")
     public String getItem(final @PathVariable("id") long id, final Model model) {
         Item item = store.findById(id);
-        service.setItem(item);
+        session.setItem(item);
         model.addAttribute("item", item);
         return "item";
     }
@@ -38,7 +38,7 @@ public class ItemController {
 
     @GetMapping("/{id}/complete")
     public String completeById(final @PathVariable("id") long id, final Model model) {
-        Item item = service.getItem();
+        Item item = session.getItem();
         item.setStatus(true);
         store.replace(id, item);
         return "redirect:/items";
@@ -46,7 +46,7 @@ public class ItemController {
 
     @GetMapping("/{id}/uncomplete")
     public String unCompleteById(final @PathVariable("id") long id) {
-        Item item = service.getItem();
+        Item item = session.getItem();
         item.setStatus(false);
         store.replace(id, item);
         return "redirect:/items";
@@ -54,10 +54,10 @@ public class ItemController {
 
     @GetMapping("/{id}/edit")
     public String editById(final @PathVariable("id") long id, final Model model) {
-        Item item = service.getItem();
+        Item item = session.getItem();
         if (item == null || item.getId() != id) {
             item = store.findById(id);
-            service.setItem(item);
+            session.setItem(item);
         }
         model.addAttribute("item", item);
         return "editeditem";
@@ -73,7 +73,7 @@ public class ItemController {
             store.add(item);
             return "redirect:/items";
         }
-        Item item = service.getItem();
+        Item item = session.getItem();
         if (item == null || item.getId() != id) {
             item = store.findById(id);
             if (item == null) {
@@ -82,7 +82,7 @@ public class ItemController {
         }
         item.setTitle(title);
         item.setDescription(description);
-        service.setItem(item);
+        session.setItem(item);
         store.replace(id, item);
         return "redirect:/items";
     }

@@ -2,6 +2,7 @@ package com.example.job4j_todo.controllers;
 
 import com.example.job4j_todo.model.Item;
 import com.example.job4j_todo.persistence.ItemStore;
+import com.example.job4j_todo.service.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,11 @@ import java.util.List;
 @Controller
 public class ItemsController {
     private final ItemStore store;
+    private final UserSession session;
 
-    public ItemsController(final ItemStore store) {
+    public ItemsController(final ItemStore store, final UserSession session) {
         this.store = store;
+        this.session = session;
     }
 
     @GetMapping("/")
