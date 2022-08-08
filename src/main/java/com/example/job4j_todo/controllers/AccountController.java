@@ -46,9 +46,11 @@ public class AccountController {
             isCorrect = false;
         }
         if (isCorrect) {
-            accountStore.add(
+            Account newAccount = accountStore.add(
                     new Account(account.getName(), account.getLogin(), account.getPassword()));
-            session.setName(account.getName());
+            newAccount.setLogin(null);
+            newAccount.setPassword(null);
+            session.setAccount(newAccount);
             return "redirect:/items";
         }
         model.addAttribute("fail", true);
@@ -64,14 +66,17 @@ public class AccountController {
         if (userDb.isEmpty()) {
             return "redirect:/items?fail=true";
         }
-        session.setName(userDb.get().getName());
+        Account user = userDb.get();
+        user.setPassword(null);
+        user.setLogin(null);
+        session.setAccount(user);
         return "redirect:/items";
     }
 
 
     @GetMapping("/logout")
     public String logout(final Model model) {
-        session.setName(null);
+        session.setAccount(null);
         return "redirect:/items";
     }
 

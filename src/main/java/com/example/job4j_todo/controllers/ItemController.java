@@ -69,7 +69,8 @@ public class ItemController {
                                final @RequestParam("title") String title,
                                final Model model) {
         if (id == 0) {
-            Item item = new Item(title, description, LocalDate.now(ZoneId.systemDefault()), false);
+            Item item = new Item(title, description, LocalDate.now(ZoneId.systemDefault()),
+                    false, session.getAccount());
             store.add(item);
             return "redirect:/items";
         }

@@ -21,7 +21,7 @@
 <body>
 
 <div class="d-flex justify-content-end pt-3 pe-4">
-  <div th:if="${@userSession.getName()==null}">
+  <div th:if="${@userSession.getAccount()==null}">
 
     <form class="row g-3" th:action="@{/logIn}" method="post">
 
@@ -51,8 +51,8 @@
       </div>
     </form>
   </div>
-  <div th:if="${@userSession.getName()!=null}">
-    <span class="pe-3" th:text="${@userSession.getName()}"></span>
+  <div th:if="${@userSession.getAccount()!=null}">
+    <span class="pe-3" th:text="${@userSession.getAccount().getName()}"></span>
     <a class="text-decoration-none pe-5"
        th:href="@{/logout}">LogOut</a>
   </div>
@@ -87,7 +87,11 @@
     <tr class="select-item" th:each="item,iterStat :${items}">
       <th scope="row" th:text="${iterStat.count}">0</th>
       <td>
-        <a th:href="@{|/item/${item.id}|}" th:text="${item.title}"></a>
+        <a th:href="@{|/item/${item.id}|}">
+          <span th:text="${item.title}"></span>
+          <span class="ms-4 text-black-50 fst-italic"
+                th:text="|автор ${item.account.name}|"></span>
+        </a>
       </td>
       <td th:text=" ${item.created}">Mark</td>
       <td>

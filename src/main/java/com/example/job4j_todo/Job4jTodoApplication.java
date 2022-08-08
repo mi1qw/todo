@@ -28,25 +28,26 @@ public class Job4jTodoApplication {
         return args -> {
             System.out.println("CommandLineRunner");
             try {
-                accountStore.add(new Account("Ann", "aa", "1"));
+                Account account = new Account("Вася", "mail@gmail.com", "111");
+                accountStore.add(account);
+
+                itemStore.add(new Item("Наказать кота", "Помыть, невозможно грязный кот и как-то "
+                                                        + "странно воняет, обязательно "
+                                                        + "отмыть а"
+                                                        + " то запачкает холодильник!",
+                        LocalDate.now(),
+                        false, account));
+                itemStore.add(new Item("Выгулять собаку", "Гадит под дверью, просится на улицу. "
+                                                          + "Соседи ругаются.",
+                        LocalDate.now(),
+                        false, account));
+                itemStore.add(
+                        new Item("Достать кота из холодильника", "Простить кота и ...не забыть "
+                                                                 + "включить холодильник в "
+                                                                 + "розетку ",
+                                LocalDate.now(), false, account));
             } catch (Exception e) {
             }
-
-            itemStore.add(new Item("Наказать кота", "Помыть, невозможно грязный кот и как-то "
-                                                             + "странно воняет, обязательно "
-                                                             + "отмыть а"
-                                                             + " то запачкает холодильник!",
-                    LocalDate.now(),
-                    false));
-            itemStore.add(new Item("Выгулять собаку", "Гадит под дверью, просится на улицу. "
-                                                      + "Соседи ругаются.",
-                    LocalDate.now(),
-                    false));
-            itemStore.add(
-                    new Item("Достать кота из холодильника", "Простить кота и ...не забыть "
-                                                             + "включить холодильник в "
-                                                             + "розетку ",
-                            LocalDate.now(), false));
         };
     }
 }

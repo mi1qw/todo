@@ -21,11 +21,24 @@ public class Item {
     private LocalDate created;
     private boolean status;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     public Item(final String title, final String description, final LocalDate created,
                 final boolean status) {
         this.description = description;
         this.created = created;
         this.status = status;
         this.title = title;
+    }
+
+    public Item(final String title, final String description, final LocalDate created,
+                final boolean status, final Account account) {
+        this.description = description;
+        this.created = created;
+        this.status = status;
+        this.title = title;
+        this.account = account;
     }
 }

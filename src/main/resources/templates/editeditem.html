@@ -22,13 +22,13 @@
 <body>
 
 <div class="d-flex justify-content-end pt-3 pe-4">
-  <div th:if="${@userSession.getName()==null}">
+  <div th:if="${@userSession.getAccount()==null}">
     <span class="pe-3">Гость</span>
     <a class="text-decoration-none pe-5"
        th:href="@{/loginPage}">LogIn</a>
   </div>
-  <div th:if="${@userSession.getName()!=null}">
-    <span class="pe-3" th:text="${@userSession.getName()}"></span>
+  <div th:if="${@userSession.getAccount()!=null}">
+    <span class="pe-3" th:text="${@userSession.getAccount().getName()}"></span>
     <a class="text-decoration-none pe-5"
        th:href="@{/logout}">LogOut</a>
   </div>

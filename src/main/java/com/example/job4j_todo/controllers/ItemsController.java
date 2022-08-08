@@ -43,7 +43,9 @@ public class ItemsController {
     @GetMapping("/newItem")
     public String newItem(final Model model) {
         Item item = new Item("Name", "Description",
-                LocalDate.now(ZoneId.systemDefault()), false);
+                LocalDate.now(ZoneId.systemDefault()),
+                false,
+                session.getAccount());
         item.setId(0L);
         model.addAttribute("item", item);
         return "editeditem";
