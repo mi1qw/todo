@@ -1,7 +1,7 @@
 package com.example.job4j_todo;
 
 import com.example.job4j_todo.model.Item;
-import com.example.job4j_todo.persistence.ItemStore;
+import com.example.job4j_todo.store.ItemStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

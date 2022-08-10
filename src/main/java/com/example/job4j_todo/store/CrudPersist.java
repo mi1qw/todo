@@ -1,4 +1,4 @@
-package com.example.job4j_todo.persistence;
+package com.example.job4j_todo.store;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -14,10 +14,10 @@ public class CrudPersist<T> implements CRUDStore<T> {
     private final Class<T> aClass;
     private final String className;
     private Method setId;
-    private final Function<Function<Session, T>, T> tx;
+    private final Function<Function<Session, ?>, T> tx;
 
     public CrudPersist(final Class<T> aClass,
-                       final Function<Function<Session, T>, T> tx) {
+                       final Function<Function<Session, ?>, T> tx) {
         this.tx = tx;
         this.aClass = aClass;
         this.className = aClass.getSimpleName();
@@ -50,8 +50,6 @@ public class CrudPersist<T> implements CRUDStore<T> {
 
     /**
      * replace.
-     * session.get with catch ObjectNotFoundException
-     * change by get()
      *
      * @param id   id
      * @param item item
@@ -60,15 +58,13 @@ public class CrudPersist<T> implements CRUDStore<T> {
     @Override
     public boolean replace(final Long id, final T item) {
         return (boolean) tx.apply(session -> {
-            try {
-                T oldItem = session.get(aClass, id);
-                int i = oldItem.hashCode();
-            } catch (Exception e) {
-                return (T) Boolean.valueOf(false);
+            T oldItem = session.get(aClass, id);
+            if (oldItem == null) {
+                return false;
             }
             setIdmethod(id, item);
             session.merge(item);
-            return (T) Boolean.valueOf(true);
+            return true;
         });
     }
 
@@ -76,13 +72,10 @@ public class CrudPersist<T> implements CRUDStore<T> {
     @Override
     public boolean delete(final Long id) {
         try {
-            int del = (int) tx.apply(session -> {
-                Integer del1 = session
-                        .createQuery("delete from " + className + " where id=:id")
-                        .setParameter("id", id)
-                        .executeUpdate();
-                return (T) del1;
-            });
+            int del = (int) tx.apply(session ->
+                    session.createQuery("delete from " + className + " where id=:id")
+                            .setParameter("id", id)
+                            .executeUpdate());
             return del != 0;
         } catch (Exception e) {
             return false;
@@ -107,10 +100,10 @@ public class CrudPersist<T> implements CRUDStore<T> {
     @Override
     public List<T> findAll() {
         try {
-            return (List<T>) tx.apply(session -> (T) session
+            return (List<T>) tx.apply(session -> session
                     .createQuery("from " + className).list());
         } catch (Exception e) {
-            return new ArrayList<T>();
+            return new ArrayList<>();
         }
     }
 
@@ -118,18 +111,17 @@ public class CrudPersist<T> implements CRUDStore<T> {
     @Override
     public List<T> findByName(final String name) {
         try {
-            List<T> list = (List<T>) tx.apply(session -> (T) session
+            return (List<T>) tx.apply(session -> session
                     .createQuery("from " + className + " a where a.name=:name", aClass)
                     .setParameter("name", name)
                     .list());
-            return list;
         } catch (Exception e) {
-            return new ArrayList<T>();
+            return new ArrayList<>();
         }
     }
 
 
     private String getNameEntity() {
-        return (String) tx.apply(session -> (T) session.getMetamodel().entity(aClass).getName());
+        return (String) tx.apply(session -> session.getMetamodel().entity(aClass).getName());
     }
 }

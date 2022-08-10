@@ -1,7 +1,7 @@
 package com.example.job4j_todo;
 
 import com.example.job4j_todo.model.Account;
-import com.example.job4j_todo.persistence.AccountStore;
+import com.example.job4j_todo.store.AccountStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,9 +28,13 @@ public class AccountStoreTest {
         Account account = new Account("name", "login1", "password");
         store.add(account);
         long id = account.getId();
-        store.replace(id, new Account("name2", "login1", "password"));
+        Account account2 = new Account("name2", "login1", "password");
+        assertThat(store.replace(id, account2)).isTrue();
         account = store.findById(id);
         assertThat(account.getName()).isEqualTo("name2");
+
+        assertThat(store.replace(999L, account2)).isFalse();
+        assertThat(store.findById(999L)).isNull();
     }
 
     @Test

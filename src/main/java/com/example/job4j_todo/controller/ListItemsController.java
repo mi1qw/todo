@@ -1,7 +1,7 @@
-package com.example.job4j_todo.controllers;
+package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Item;
-import com.example.job4j_todo.persistence.ItemStore;
+import com.example.job4j_todo.store.ItemStore;
 import com.example.job4j_todo.service.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +13,11 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Controller
-public class ItemsController {
+public class ListItemsController {
     private final ItemStore store;
     private final UserSession session;
 
-    public ItemsController(final ItemStore store, final UserSession session) {
+    public ListItemsController(final ItemStore store, final UserSession session) {
         this.store = store;
         this.session = session;
     }

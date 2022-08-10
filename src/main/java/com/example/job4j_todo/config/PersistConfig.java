@@ -1,4 +1,4 @@
-package com.example.job4j_todo.persistence;
+package com.example.job4j_todo.config;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,12 +22,12 @@ public class PersistConfig {
     }
 
     @Bean
-    public <T> Function<Function<Session, T>, T> sessionTx(final SessionFactory sessionFactory) {
+    public <T> Function<Function<Session, ?>, T> sessionTx(final SessionFactory sessionFactory) {
         return sessionTx -> {
             final Session session = sessionFactory.openSession();
             final Transaction tx = session.beginTransaction();
             try {
-                T rsl = sessionTx.apply(session);
+                T rsl = (T) sessionTx.apply(session);
                 tx.commit();
                 return rsl;
             } catch (final Exception e) {

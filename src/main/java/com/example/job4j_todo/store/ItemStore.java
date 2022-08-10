@@ -1,4 +1,4 @@
-package com.example.job4j_todo.persistence;
+package com.example.job4j_todo.store;
 
 import com.example.job4j_todo.model.Item;
 import org.hibernate.Session;

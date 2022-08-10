@@ -1,7 +1,7 @@
-package com.example.job4j_todo.controllers;
+package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Account;
-import com.example.job4j_todo.persistence.AccountStore;
+import com.example.job4j_todo.store.AccountStore;
 import com.example.job4j_todo.service.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

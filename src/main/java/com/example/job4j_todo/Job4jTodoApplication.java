@@ -2,8 +2,8 @@ package com.example.job4j_todo;
 
 import com.example.job4j_todo.model.Account;
 import com.example.job4j_todo.model.Item;
-import com.example.job4j_todo.persistence.AccountStore;
-import com.example.job4j_todo.persistence.ItemStore;
+import com.example.job4j_todo.store.AccountStore;
+import com.example.job4j_todo.store.ItemStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
