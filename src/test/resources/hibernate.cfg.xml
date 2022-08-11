@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
-
         <property name="hibernate.connection.url">
             jdbc:hsqldb:mem:todo;sql.enforce_size=false;sql.syntax_pgs=true;DB_CLOSE_DELAY=-1;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DATABASE_TO_UPPER=FALSE;
         </property>
@@ -20,9 +20,11 @@
         <property name="hibernate.use_sql_comments">true</property>
 
         <property name="hibernate.hbm2ddl.auto">create</property>
+<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
         <!-- List of XML mapping files -->
 
         <mapping class="com.example.job4j_todo.model.Account"/>
         <mapping class="com.example.job4j_todo.model.Item"/>
+        <mapping class="com.example.job4j_todo.model.Category"/>
     </session-factory>
 </hibernate-configuration>

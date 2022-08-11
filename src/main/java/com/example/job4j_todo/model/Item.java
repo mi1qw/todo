@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,14 +18,19 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String title;
     private String description;
     private LocalDate created;
     private boolean status;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    // TODO добавить в ликвибайз
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Category> categories = new HashSet<>();
 
     public Item(final String title, final String description, final LocalDate created,
                 final boolean status) {

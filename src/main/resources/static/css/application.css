@@ -46,3 +46,8 @@ tr td:hover a {
 .smaller {
     transform: scale(0.8) !important;
 }
+
+.small-badge {
+    margin-right: -17px;
+    transform: scale(0.73) !important;
+}

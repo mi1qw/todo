@@ -16,7 +16,7 @@
           crossorigin="anonymous"></script>
   <link rel='stylesheet'
         href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
-  <link rel="stylesheet" th:href="@{/css/application.css}">
+  <link rel='stylesheet' th:href="@{css/application.css}">
 </head>
 <body>
 
@@ -91,6 +91,21 @@
           <span th:text="${item.title}"></span>
           <span class="ms-4 text-black-50 fst-italic"
                 th:text="|автор ${item.account.name}|"></span>
+
+          <span th:each="category:*{item.categories}" th:switch="${category.id}">
+          <span th:case="1" class="badge rounded-pill text-bg-primary small-badge"
+                th:text="${category.name}">
+          </span>
+          <span th:case="2" class="badge rounded-pill text-bg-success small-badge"
+                th:text="${category.name}">
+          </span>
+          <span th:case="3" class="badge rounded-pill text-bg-info small-badge"
+                th:text="${category.name}">
+          </span>
+          <span th:case="4" class="badge rounded-pill text-bg-warning small-badge"
+                th:text="${category.name}">
+          </span>
+        </span>
         </a>
       </td>
       <td th:text=" ${item.created}">Mark</td>

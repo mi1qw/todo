@@ -112,7 +112,8 @@ public class CrudPersist<T> implements CRUDStore<T> {
     public List<T> findByName(final String name) {
         try {
             return (List<T>) tx.apply(session -> session
-                    .createQuery("from " + className + " a where a.name=:name", aClass)
+                    .createNativeQuery("select * from " + className + " a where a.name=:name",
+                            aClass)
                     .setParameter("name", name)
                     .list());
         } catch (Exception e) {

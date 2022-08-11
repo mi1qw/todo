@@ -1,14 +1,16 @@
 package com.example.job4j_todo.controller;
 
+import com.example.job4j_todo.model.Category;
 import com.example.job4j_todo.model.Item;
-import com.example.job4j_todo.store.ItemStore;
 import com.example.job4j_todo.service.UserSession;
+import com.example.job4j_todo.store.ItemStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 @Controller
 @RequestMapping("/item")
@@ -67,11 +69,18 @@ public class ItemController {
     public String postEditById(final @PathVariable("id") long id,
                                final @RequestParam("description") String description,
                                final @RequestParam("title") String title,
-                               final Model model) {
-        if (id == 0) {
+                               final @RequestParam List<Category> categories,
+                               final Model model,
+                               final @ModelAttribute Item itemForm) {
+        Long idForm = itemForm.getId();
+        if (idForm == 0) {
             Item item = new Item(title, description, LocalDate.now(ZoneId.systemDefault()),
                     false, session.getAccount());
-            store.add(item);
+            itemForm.setCreated(LocalDate.now(ZoneId.systemDefault()));
+            itemForm.setAccount(session.getAccount());
+            itemForm.setId(null);
+            session.setItem(itemForm);
+            store.add(itemForm);
             return "redirect:/items";
         }
         Item item = session.getItem();
@@ -81,10 +90,10 @@ public class ItemController {
                 return "redirect:/items";
             }
         }
-        item.setTitle(title);
-        item.setDescription(description);
-        session.setItem(item);
-        store.replace(id, item);
+        itemForm.setAccount(session.getAccount());
+        itemForm.setCreated(item.getCreated());
+        session.setItem(itemForm);
+        store.replace(id, itemForm);
         return "redirect:/items";
     }
 }
