@@ -58,7 +58,7 @@
   </div>
 </div>
 
-<nav class="nav">
+<nav th:if="${@userSession.getAccount()!=null}" class="nav">
   <span class="nav-link disabled">Показать</span>
   <a class="nav-link text-muted"
      th:classappend="${filtr!='yes' && filtr!='no'}?'active-menu':'non-active'"
@@ -71,7 +71,22 @@
      th:href="@{/no}">Новые</a>
 </nav>
 
-<div class="container position-relative pt-3">
+<div th:if="${@userSession.getAccount()==null}" class="d-flex flex-column mb-2">
+  <div class="p-4 text-bg-info"></div>
+  <div class="p-2 text-bg-dark justify-content-center">
+    <div class="d-flex justify-content-center align-items-center p-3">
+      <h1 class="text-nowrap fw-bold" style="font-size: 550%; font-family: sans-serif;">simple
+        TODO</h1>
+    </div>
+  </div>
+  <div class="p-4 text-bg-info"></div>
+  <div class="p-3 text-bg-light text-center fs-6"
+       style="font-family:Muli, Arial, sans-serif;">
+    Войдите в свою учетную запись или зарегистрируйтесь
+  </div>
+</div>
+
+<div th:if="${@userSession.getAccount()!=null}" class="container position-relative pt-3">
   <table class="table caption-top">
     <caption>List of TODO</caption>
     <thead class="table-light">
@@ -121,6 +136,7 @@
   </table>
 
   <div class="position-absolute bottom-0 end-0"
+       th:if="${@userSession.getAccount()!=null}"
        style='transform: translate(-350%,120%);'>
     <a class='bi bi-plus-circle-fill' style="font-size: 300%;color: #ff00aa"
        th:href="@{/newItem}"

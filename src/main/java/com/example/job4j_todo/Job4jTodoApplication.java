@@ -38,8 +38,11 @@ public class Job4jTodoApplication {
                 Category interests = categoryStore.findByName("интересы").get(0);
                 Category warn = categoryStore.findByName("важное").get(0);
 
-                Account account = new Account("Вася", "mail@gmail.com", "111");
-                accountStore.add(account);
+                Account vasya = new Account("Вася", "vasya@gmail.com", "111");
+                accountStore.add(vasya);
+
+                Account ann = new Account("Ann", "ann@gmail.com", "111");
+                accountStore.add(ann);
 
                 Item item1 = new Item("Наказать кота",
                         "Помыть, невозможно грязный кот и как-то "
@@ -47,7 +50,7 @@ public class Job4jTodoApplication {
                         + "отмыть а"
                         + " то запачкает холодильник!",
                         LocalDate.now(),
-                        false, account);
+                        false, vasya);
                 item1.getCategories().add(personal);
                 itemStore.add(item1);
 
@@ -55,7 +58,7 @@ public class Job4jTodoApplication {
                         "Гадит под дверью, просится на улицу. "
                         + "Соседи ругаются.",
                         LocalDate.now(),
-                        false, account);
+                        false, vasya);
                 item2.getCategories().add(warn);
                 item2.getCategories().add(personal);
                 itemStore.add(item2);
@@ -64,11 +67,24 @@ public class Job4jTodoApplication {
                         "Простить кота и ...не забыть "
                         + "включить холодильник в "
                         + "розетку ",
-                        LocalDate.now(), false, account);
+                        LocalDate.now(), false, vasya);
                 item3.getCategories().add(warn);
                 item3.getCategories().add(personal);
                 itemStore.add(item3);
 
+                Item item4 = new Item("В гости к Васе",
+                        "Навестить Васю на пару чашек чая",
+                        LocalDate.now(), false, ann);
+                item4.getCategories().add(work);
+                item4.getCategories().add(warn);
+                itemStore.add(item4);
+
+                Item item5 = new Item("Новая причёска",
+                        "Сходить к Танечке. Взять с собой журнал",
+                        LocalDate.now(), false, ann);
+                item5.getCategories().add(personal);
+                item5.getCategories().add(interests);
+                itemStore.add(item5);
 
             } catch (Exception e) {
             }

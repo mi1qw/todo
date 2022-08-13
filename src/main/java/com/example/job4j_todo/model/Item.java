@@ -28,7 +28,6 @@ public class Item {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    // TODO добавить в ликвибайз
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 

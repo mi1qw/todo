@@ -1,5 +1,6 @@
 package com.example.job4j_todo.store;
 
+import com.example.job4j_todo.model.Account;
 import com.example.job4j_todo.model.Item;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -45,5 +46,12 @@ public class ItemStore implements CRUDStore<Item> {
     @Override
     public Item findById(final Long id) {
         return crud.findById(id);
+    }
+
+    public List<Item> findByUser(final Account account) {
+        return (List<Item>) tx.apply(session ->
+                session.createQuery("from Item where account=:account_id", Item.class)
+                        .setParameter("account_id", account)
+                        .list());
     }
 }

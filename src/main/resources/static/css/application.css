@@ -4,13 +4,13 @@
 
 .non-active:hover {
     border-bottom: 4px solid rgba(100, 189, 222);
-    transform: scale(1.01);
-    border-radius: 4px;
-    box-shadow: 0 8px 25px 0px rgba(0, 0, 0, 0.225);
-    -webkit-transition-property: left, right;
-    transition-property: left, right;
-    -webkit-transition-duration: 0.7s;
-    transition-duration: 0.7s;
+    color: rgb(73, 154, 184) !important;
+    position: relative;
+    top: -2px;
+    transition-duration: 0s;
+    -webkit-box-shadow: 0px 18px 24px -2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 18px 24px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 18px 24px -2px rgba(0, 0, 0, 0.05);
 }
 
 .select-item a {
@@ -23,16 +23,11 @@ tr td:nth-child(2) a {
 }
 
 tr td:hover a {
-    color: #ba0000;
+    color: rgb(35, 76, 89);
 }
 
 .select-item:hover {
     border-bottom: 2px solid rgba(100, 189, 222);
-    background: -webkit-linear-gradient(#ffffff, #808080);
-    background: -moz-linear-gradient(#ffffff, #808080);
-    background: -o-linear-gradient(#ffffff, #808080);
-    background: linear-gradient(#ffffff, #808080);
-    background-size: 1px 600px;
 }
 
 .hr-line {
