@@ -1,8 +1,8 @@
 package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Account;
-import com.example.job4j_todo.store.AccountStore;
-import com.example.job4j_todo.service.UserSession;
+import com.example.job4j_todo.service.AccountService;
+import com.example.job4j_todo.web.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,11 @@ import java.util.Optional;
 
 @Controller
 public class AccountController {
-    private final AccountStore accountStore;
+    private final AccountService accountService;
     private final UserSession session;
 
-    public AccountController(final AccountStore accountStore, final UserSession session) {
-        this.accountStore = accountStore;
+    public AccountController(final AccountService accountService, final UserSession session) {
+        this.accountService = accountService;
         this.session = session;
     }
 
@@ -33,7 +33,7 @@ public class AccountController {
     public String signIn(final @ModelAttribute Account account, final Model model) {
         boolean isCorrect = true;
         if (!validEmail(account.getLogin())
-            || accountStore.findUserByLogin(account.getLogin()).isPresent()) {
+            || accountService.findUserByLogin(account.getLogin()).isPresent()) {
             model.addAttribute("failLogin", true);
             isCorrect = false;
         }
@@ -46,7 +46,7 @@ public class AccountController {
             isCorrect = false;
         }
         if (isCorrect) {
-            Account newAccount = accountStore.add(
+            Account newAccount = accountService.add(
                     new Account(account.getName(), account.getLogin(), account.getPassword()));
             newAccount.setLogin(null);
             newAccount.setPassword(null);
@@ -60,7 +60,7 @@ public class AccountController {
 
     @PostMapping("/logIn")
     public String login(final @ModelAttribute Account account) {
-        Optional<Account> userDb = accountStore.findUserByLoginAndPwd(
+        Optional<Account> userDb = accountService.findUserByLoginAndPwd(
                 account.getLogin(), account.getPassword()
         );
         if (userDb.isEmpty()) {

@@ -1,6 +1,5 @@
 package com.example.job4j_todo.config;
 
-import com.example.job4j_todo.service.CategoryFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

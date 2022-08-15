@@ -1,6 +1,7 @@
-package com.example.job4j_todo.service;
+package com.example.job4j_todo.config;
 
 import com.example.job4j_todo.model.Category;
+import com.example.job4j_todo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 

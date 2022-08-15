@@ -1,8 +1,8 @@
 package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Item;
-import com.example.job4j_todo.service.UserSession;
-import com.example.job4j_todo.store.ItemStore;
+import com.example.job4j_todo.service.ItemService;
+import com.example.job4j_todo.web.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +13,17 @@ import java.time.ZoneId;
 @Controller
 @RequestMapping("/item")
 public class ItemController {
-    private final ItemStore store;
+    private final ItemService itemService;
     private final UserSession session;
 
-    public ItemController(final ItemStore store, final UserSession session) {
-        this.store = store;
+    public ItemController(final ItemService itemService, final UserSession session) {
+        this.itemService = itemService;
         this.session = session;
     }
 
     @GetMapping("/{id}")
     public String getItem(final @PathVariable("id") Long id, final Model model) {
-        Item item = store.findById(id);
+        Item item = itemService.findById(id);
         if (!isValidItemByUser(item)) {
             return "redirect:/items";
         }
@@ -34,11 +34,11 @@ public class ItemController {
 
     @GetMapping("/{id}/delete")
     public String deleteById(final @PathVariable("id") Long id, final Model model) {
-        Item item = store.findById(id);
+        Item item = itemService.findById(id);
         if (!isValidItemByUser(item)) {
             return "redirect:/items";
         }
-        store.delete(id);
+        itemService.delete(id);
         model.addAttribute("filtr", "all");
         return "redirect:/items";
     }
@@ -50,7 +50,7 @@ public class ItemController {
             return "redirect:/items";
         }
         item.setStatus(true);
-        store.replace(id, item);
+        itemService.replace(id, item);
         return "redirect:/items";
     }
 
@@ -61,7 +61,7 @@ public class ItemController {
             return "redirect:/items";
         }
         item.setStatus(false);
-        store.replace(id, item);
+        itemService.replace(id, item);
         return "redirect:/items";
     }
 
@@ -69,7 +69,7 @@ public class ItemController {
     public String editById(final @PathVariable("id") Long id, final Model model) {
         Item item = session.getItem();
         if (item == null || !item.getId().equals(id)) {
-            item = store.findById(id);
+            item = itemService.findById(id);
             session.setItem(item);
         }
         if (!isValidItemByUserById(item, id)) {
@@ -87,13 +87,13 @@ public class ItemController {
             itemForm.setCreated(LocalDate.now(ZoneId.systemDefault()));
             itemForm.setAccount(session.getAccount());
             itemForm.setId(null);
-            store.add(itemForm);
+            itemService.add(itemForm);
             session.setItem(itemForm);
             return "redirect:/items";
         }
         Item item = session.getItem();
         if (item == null || !item.getId().equals(id)) {
-            item = store.findById(id);
+            item = itemService.findById(id);
             if (item == null) {
                 return "redirect:/items";
             }
@@ -104,7 +104,7 @@ public class ItemController {
         itemForm.setAccount(session.getAccount());
         itemForm.setCreated(item.getCreated());
         session.setItem(itemForm);
-        store.replace(id, itemForm);
+        itemService.replace(id, itemForm);
         return "redirect:/items";
     }
 

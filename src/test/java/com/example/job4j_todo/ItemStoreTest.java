@@ -59,8 +59,12 @@ public class ItemStoreTest {
         store.add(item);
         long id = item.getId();
         assertThat(store.delete(id)).isTrue();
-        assertThat(store.delete(9999L)).isFalse();
         assertThat(store.findById(id)).isNull();
+    }
+
+    @Test
+    public void deleteNonExistingItemShouldFalse() {
+        assertThat(store.delete(9999L)).isFalse();
     }
 
     @Test
@@ -75,14 +79,13 @@ public class ItemStoreTest {
         assertThat(list)
                 .extracting("title", String.class)
                 .contains("A", "B");
-
     }
 
     @Test
     public void findByName() {
+        assertThat(store.findByName("A1")).isEmpty();
         store.add(new Item("A1", "item1", LocalDate.now(), false, account));
         assertThat(store.findByName("A1")).hasSize(1);
-        assertThat(store.findByName("A10")).isEmpty();
     }
 
     @Test

@@ -3,8 +3,8 @@ package com.example.job4j_todo.controller;
 import com.example.job4j_todo.model.Category;
 import com.example.job4j_todo.model.Item;
 import com.example.job4j_todo.service.CategoryService;
-import com.example.job4j_todo.service.UserSession;
-import com.example.job4j_todo.store.ItemStore;
+import com.example.job4j_todo.service.ItemService;
+import com.example.job4j_todo.web.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +16,16 @@ import java.util.List;
 
 @Controller
 public class ListItemsController {
-    private final ItemStore store;
     private final UserSession session;
     private final CategoryService categoryService;
+    private final ItemService itemService;
 
-    public ListItemsController(final ItemStore store, final UserSession session,
-                               final CategoryService categoryService) {
-        this.store = store;
+    public ListItemsController(final UserSession session,
+                               final CategoryService categoryService,
+                               final ItemService itemService) {
         this.session = session;
         this.categoryService = categoryService;
+        this.itemService = itemService;
     }
 
     @GetMapping("/")
@@ -69,6 +70,6 @@ public class ListItemsController {
     }
 
     private List<Item> getItemsByUser() {
-        return store.findByUser(session.getAccount());
+        return itemService.findByUser(session.getAccount());
     }
 }

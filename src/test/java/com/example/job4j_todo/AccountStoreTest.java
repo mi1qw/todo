@@ -32,9 +32,14 @@ public class AccountStoreTest {
         assertThat(store.replace(id, account2)).isTrue();
         account = store.findById(id);
         assertThat(account.getName()).isEqualTo("name2");
+    }
 
-        assertThat(store.replace(999L, account2)).isFalse();
-        assertThat(store.findById(999L)).isNull();
+    @Test
+    public void replaceNonExistingItemShouldFalse() {
+        assertThat(store.replace(99999L,
+                new Account("name2", "login1", "password"))
+        ).isFalse();
+        assertThat(store.findById(99999L)).isNull();
     }
 
     @Test
@@ -43,13 +48,21 @@ public class AccountStoreTest {
         store.add(account);
         long id = account.getId();
         assertThat(store.delete(id)).isTrue();
-        assertThat(store.delete(9999L)).isFalse();
         assertThat(store.findById(id)).isNull();
     }
 
     @Test
+    public void deleteNonExistingItemShouldFalse() {
+        assertThat(store.delete(9999L)).isFalse();
+    }
+
+
+    @Test
     public void findAll() {
         List<Account> listBefore = store.findAll();
+        assertThat(listBefore)
+                .extracting("name", String.class)
+                .doesNotContain("A", "B");
         store.add(new Account("A", "login3", "password"));
         store.add(new Account("B", "login4", "password"));
         List<Account> list = store.findAll();
@@ -62,14 +75,13 @@ public class AccountStoreTest {
         assertThat(list)
                 .extracting("name", String.class)
                 .containsExactlyInAnyOrder(arrayItems);
-
     }
 
     @Test
     public void findByName() {
+        assertThat(store.findByName("A1")).isEmpty();
         store.add(new Account("A1", "login5", "password"));
         assertThat(store.findByName("A1")).hasSize(1);
-        assertThat(store.findByName("A10")).isEmpty();
     }
 
     @Test
