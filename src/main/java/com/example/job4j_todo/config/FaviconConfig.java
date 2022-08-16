@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-public class FaviconConfiguration {
+public class FaviconConfig {
     @Bean
     public SimpleUrlHandlerMapping customFaviconHandlerMapping() {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();

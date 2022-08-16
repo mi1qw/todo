@@ -1,6 +1,9 @@
 package com.example.job4j_todo.model;
 
+import com.example.job4j_todo.validation.ValidationGroupOne;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,8 +21,13 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @Size(min = 2, message = "cлишком короткое название",
+            groups = ValidationGroupOne.class)
     @Column(name = "name")
     private String title;
+
     private String description;
     private LocalDate created;
     private boolean status;
@@ -30,14 +38,6 @@ public class Item {
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
-
-    public Item(final String title, final String description, final LocalDate created,
-                final boolean status) {
-        this.description = description;
-        this.created = created;
-        this.status = status;
-        this.title = title;
-    }
 
     public Item(final String title, final String description, final LocalDate created,
                 final boolean status, final Account account) {

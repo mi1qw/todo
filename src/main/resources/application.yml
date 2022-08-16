@@ -4,5 +4,6 @@ spring:
   sql.init.mode: always
   thymeleaf:
     cache: false
-    template-resolver-order: 0
-
+#    template-resolver-order: 0
+    prefix: classpath:/templates/
+    suffix: .html

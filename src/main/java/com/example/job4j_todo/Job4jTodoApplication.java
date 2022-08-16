@@ -87,6 +87,7 @@ public class Job4jTodoApplication {
                 itemStore.add(item5);
 
             } catch (Exception e) {
+                e.printStackTrace();
             }
         };
     }

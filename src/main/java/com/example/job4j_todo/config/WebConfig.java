@@ -1,5 +1,6 @@
 package com.example.job4j_todo.config;
 
+import com.example.job4j_todo.util.CategoryFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @Configuration
-public class ConfigurationWeb implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(final FormatterRegistry registry) {

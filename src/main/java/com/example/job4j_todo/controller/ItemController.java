@@ -2,9 +2,12 @@ package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Item;
 import com.example.job4j_todo.service.ItemService;
+import com.example.job4j_todo.validation.ValidationGroupSequence;
 import com.example.job4j_todo.web.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -43,24 +46,14 @@ public class ItemController {
         return "redirect:/items";
     }
 
-    @GetMapping("/{id}/complete")
-    public String completeById(final @PathVariable("id") Long id) {
+    @GetMapping("/updateStatus/{id}")
+    public String updateStatusById(final @PathVariable("id") Long id,
+                                   final @RequestParam("status") boolean status) {
         Item item = session.getItem();
         if (!isValidItemByUserById(item, id)) {
             return "redirect:/items";
         }
-        item.setStatus(true);
-        itemService.replace(id, item);
-        return "redirect:/items";
-    }
-
-    @GetMapping("/{id}/uncomplete")
-    public String unCompleteById(final @PathVariable("id") Long id) {
-        Item item = session.getItem();
-        if (!isValidItemByUserById(item, id)) {
-            return "redirect:/items";
-        }
-        item.setStatus(false);
+        item.setStatus(status);
         itemService.replace(id, item);
         return "redirect:/items";
     }
@@ -81,7 +74,12 @@ public class ItemController {
 
     @PostMapping("/{id}/edit")
     public String postEditById(final @PathVariable("id") Long id,
-                               final @ModelAttribute Item itemForm) {
+                               final @Validated(ValidationGroupSequence.class)
+                               @ModelAttribute Item itemForm,
+                               final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "editeditem";
+        }
         Long idForm = itemForm.getId();
         if (idForm == 0) {
             itemForm.setCreated(LocalDate.now(ZoneId.systemDefault()));

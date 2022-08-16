@@ -72,10 +72,12 @@
       <div class="mt-2">
         <div class="d-flex ">
           <div class="pe-3" th:if="*{!status}">
-            <a th:href="@{|/item/*{id}/complete|}" class="btn btn-success mt-2 py-1">Complete</a>
+            <a th:href="@{|/item/updateStatus/*{id}?status=true|}"
+               class="btn btn-success mt-2 py-1">
+              Complete</a>
           </div>
           <div class="pe-3" th:if="*{status}">
-            <a th:href="@{|/item/*{id}/uncomplete|}"
+            <a th:href="@{|/item/updateStatus/*{id}?status=false|}"
                class="btn btn-primary mt-2 py-1">Uncomplete</a>
           </div>
           <div class="pe-3">
@@ -87,6 +89,5 @@
     </div>
   </div>
 </div>
-
 </body>
 </html>

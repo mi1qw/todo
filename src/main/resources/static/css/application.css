@@ -46,3 +46,47 @@ tr td:hover a {
     margin-right: -17px;
     transform: scale(0.73) !important;
 }
+
+option[value='1'] {
+    font-weight: bold;
+    color: #0D6EFD;
+}
+select option[value='1']:focus,
+select option[value='1']:active,
+select option[value='1']:checked {
+    background: linear-gradient(#0D6EFD, #0D6EFD);
+    background-color: #0D6EFD !important; /* for IE */
+}
+
+option[value='2'] {
+    font-weight: bold;
+    color: rgb(25, 135, 84);
+}
+select option[value='2']:focus,
+select option[value='2']:active,
+select option[value='2']:checked {
+    background: linear-gradient(#198754, #198754);
+    background-color: #198754 !important; /* for IE */
+}
+
+option[value='3'] {
+    font-weight: bold;
+    color: rgb(13, 202, 240);
+}
+select option[value='3']:focus,
+select option[value='3']:active,
+select option[value='3']:checked {
+    background: linear-gradient(#0DCAF0, #0DCAF0);
+    background-color: rgb(13, 202, 240) !important; /* for IE */
+}
+
+option[value='4'] {
+    font-weight: bold;
+    color: rgb(255, 193, 7);
+}
+select option[value='4']:focus,
+select option[value='4']:active,
+select option[value='4']:checked {
+    background: linear-gradient(#FFC107, #FFC107);
+    background-color: #FFC107 !important; /* for IE */
+}

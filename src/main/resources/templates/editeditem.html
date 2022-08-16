@@ -48,6 +48,10 @@
               <label for="Title" class="form-label">Title</label>
               <input type="text" class="form-control" id="Title"
                      th:value="*{title}" name="title">
+              <div class="text-danger"
+                   th:if="${#fields.hasErrors('title')}"
+                   th:text="${#strings.listJoin(#fields.errors('title'),', ')}"
+              ></div>
             </div>
             <div class="mb-3">
               <label for="descriptionText" class="form-label">Description</label>
@@ -61,7 +65,7 @@
               <span th:text="*{created}" class="fw-bolder "></span>
             </div>
 
-            <select id="categories" class="form-select form-select-sm mb-3" multiple
+            <select id="categories" class="form-select form-select-sm mb-3 w-50" multiple
                     aria-label="multiple select example"
                     size="4"
                     th:field="*{categories}">
@@ -71,7 +75,6 @@
               ></option>
             </select>
 
-
             <div class="d-flex">
               <div class="pe-3">
                 <button type="submit" class="btn btn-light btn-block py-1">Save</button>
@@ -80,7 +83,6 @@
                 <a th:href="@{/items}" class="btn btn-light py-1">Cancel</a>
               </div>
             </div>
-
 
           </form>
         </div>
@@ -98,10 +100,12 @@
       <div class="mt-2">
         <div class="d-flex ">
           <div class="pe-3" th:if="*{!status}">
-            <a th:href="@{|/item/*{id}/complete|}" class="btn btn-success mt-2 py-1">Complete</a>
+            <a th:href="@{|/item/updateStatus/*{id}?status=true|}"
+               class="btn btn-success mt-2 py-1">
+              Complete</a>
           </div>
           <div class="pe-3" th:if="*{status}">
-            <a th:href="@{|/item/*{id}/uncomplete|}"
+            <a th:href="@{|/item/updateStatus/*{id}?status=false|}"
                class="btn btn-primary mt-2 py-1">Uncomplete</a>
           </div>
           <div class="pe-3">

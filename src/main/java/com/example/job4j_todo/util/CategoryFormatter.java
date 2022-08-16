@@ -1,4 +1,4 @@
-package com.example.job4j_todo.config;
+package com.example.job4j_todo.util;
 
 import com.example.job4j_todo.model.Category;
 import com.example.job4j_todo.service.CategoryService;

@@ -2,9 +2,12 @@ package com.example.job4j_todo.controller;
 
 import com.example.job4j_todo.model.Account;
 import com.example.job4j_todo.service.AccountService;
+import com.example.job4j_todo.validation.ValidationGroupSequence;
 import com.example.job4j_todo.web.UserSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,36 +29,24 @@ public class AccountController {
     public String loginPage(final Model model,
                             final @RequestParam(name = "fail", required = false) Boolean fail) {
         model.addAttribute("fail", fail != null);
+        model.addAttribute("account", new Account());
         return "signin";
     }
 
     @PostMapping("/signIn")
-    public String signIn(final @ModelAttribute Account account, final Model model) {
-        boolean isCorrect = true;
-        if (!validEmail(account.getLogin())
-            || accountService.findUserByLogin(account.getLogin()).isPresent()) {
-            model.addAttribute("failLogin", true);
-            isCorrect = false;
+    public String signIn(
+            final @Validated(ValidationGroupSequence.class)
+            @ModelAttribute("account") Account account,
+            final BindingResult bindingResult,
+            final Model model) {
+        if (bindingResult.hasErrors()) {
+            return "signin";
         }
-        if (account.getPassword().length() < 3) {
-            model.addAttribute("failPassword", true);
-            isCorrect = false;
-        }
-        if (account.getName().length() < 2) {
-            model.addAttribute("failName", true);
-            isCorrect = false;
-        }
-        if (isCorrect) {
-            Account newAccount = accountService.add(
-                    new Account(account.getName(), account.getLogin(), account.getPassword()));
-            newAccount.setLogin(null);
-            newAccount.setPassword(null);
-            session.setAccount(newAccount);
-            return "redirect:/items";
-        }
-        model.addAttribute("fail", true);
-        model.addAttribute(account);
-        return "signin";
+        Account newAccount = accountService.add(account);
+        newAccount.setLogin(null);
+        newAccount.setPassword(null);
+        session.setAccount(newAccount);
+        return "redirect:/items";
     }
 
     @PostMapping("/logIn")
@@ -73,17 +64,9 @@ public class AccountController {
         return "redirect:/items";
     }
 
-
     @GetMapping("/logout")
     public String logout(final Model model) {
         session.setAccount(null);
         return "redirect:/items";
-    }
-
-    private boolean validEmail(final String email) {
-        String regex
-                = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)"
-                  + "+[a-zA-Z]{2,6}$";
-        return email.matches(regex);
     }
 }

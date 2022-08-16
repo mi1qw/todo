@@ -1,0 +1,24 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div class="pt-3"
+     th:fragment="inputfield(labelText,fieldName)"
+     th:with="inputType=${inputType?:'text'},placeholder=${placeholder?:''}">
+  <label style="font-family:Muli, Arial, sans-serif;"
+         th:for="${fieldName}" th:text="${labelText}">Имя</label>
+  <input th:id="${fieldName}"
+         th:type="${inputType}"
+         th:placeholder="${placeholder}"
+         class="form-control"
+         th:field="*{__${fieldName}__}"
+         th:classappend="${account.name!=null} ?
+          (${#fields.hasErrors('__${fieldName}__')} ? ' is-invalid')"
+  >
+  <div class="text-danger"
+       th:if="${#fields.hasErrors('__${fieldName}__')}"
+       th:text="${#strings.listJoin(#fields.errors('__${fieldName}__'),', ')}"
+  >
+  </div>
+</div>
+</html>
+
+
