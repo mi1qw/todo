@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +29,10 @@ public class Item {
     private String title;
 
     private String description;
-    private LocalDate created;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
     private boolean status;
 
     @ManyToOne(optional = false)
@@ -39,7 +42,7 @@ public class Item {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
-    public Item(final String title, final String description, final LocalDate created,
+    public Item(final String title, final String description, final Date created,
                 final boolean status, final Account account) {
         this.description = description;
         this.created = created;

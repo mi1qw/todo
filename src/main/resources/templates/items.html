@@ -124,7 +124,7 @@
         </span>
         </a>
       </td>
-      <td th:text=" ${item.created}">Mark</td>
+      <td th:text="${#dates.format(item.created, 'dd-MM-yyyy HH:mm')}">Mark</td>
       <td>
         <span class='bi bi-check-circle-fill' style='color: green'
               th:if="${item.status}"></span>

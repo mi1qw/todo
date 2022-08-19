@@ -12,7 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @SpringBootApplication
 public class Job4jTodoApplication {
@@ -49,7 +49,7 @@ public class Job4jTodoApplication {
                         + "странно воняет, обязательно "
                         + "отмыть а"
                         + " то запачкает холодильник!",
-                        LocalDate.now(),
+                        new Date(),
                         false, vasya);
                 item1.getCategories().add(personal);
                 itemStore.add(item1);
@@ -57,7 +57,7 @@ public class Job4jTodoApplication {
                 Item item2 = new Item("Выгулять собаку",
                         "Гадит под дверью, просится на улицу. "
                         + "Соседи ругаются.",
-                        LocalDate.now(),
+                        new Date(),
                         false, vasya);
                 item2.getCategories().add(warn);
                 item2.getCategories().add(personal);
@@ -67,21 +67,21 @@ public class Job4jTodoApplication {
                         "Простить кота и ...не забыть "
                         + "включить холодильник в "
                         + "розетку ",
-                        LocalDate.now(), false, vasya);
+                        new Date(), false, vasya);
                 item3.getCategories().add(warn);
                 item3.getCategories().add(personal);
                 itemStore.add(item3);
 
                 Item item4 = new Item("В гости к Васе",
                         "Навестить Васю на пару чашек чая",
-                        LocalDate.now(), false, ann);
+                        new Date(), false, ann);
                 item4.getCategories().add(work);
                 item4.getCategories().add(warn);
                 itemStore.add(item4);
 
                 Item item5 = new Item("Новая причёска",
                         "Сходить к Танечке. Взять с собой журнал",
-                        LocalDate.now(), false, ann);
+                        new Date(), false, ann);
                 item5.getCategories().add(personal);
                 item5.getCategories().add(interests);
                 itemStore.add(item5);

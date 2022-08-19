@@ -10,8 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/item")
@@ -82,7 +81,7 @@ public class ItemController {
         }
         Long idForm = itemForm.getId();
         if (idForm == 0) {
-            itemForm.setCreated(LocalDate.now(ZoneId.systemDefault()));
+            itemForm.setCreated(new Date());
             itemForm.setAccount(session.getAccount());
             itemForm.setId(null);
             itemService.add(itemForm);

@@ -10,8 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -55,7 +54,7 @@ public class ListItemsController {
     @GetMapping("/newItem")
     public String newItem(final Model model) {
         Item item = new Item("Name", "Description",
-                LocalDate.now(ZoneId.systemDefault()),
+                new Date(),
                 false,
                 session.getAccount());
         item.setId(0L);

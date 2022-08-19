@@ -22,6 +22,7 @@
         <property name="hibernate.hbm2ddl.auto">create</property>
 <!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
         <property name="javax.persistence.validation.mode">none</property>
+        <property name="hibernate.jdbc.time_zone">Europe/Kiev</property>
         <!-- List of XML mapping files -->
 
         <mapping class="com.example.job4j_todo.model.Account"/>

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,19 +35,19 @@ public class ItemStoreTest {
 
     @Test
     public void add() {
-        Item item = new Item("item1", "item1", LocalDate.now(), false, account);
+        Item item = new Item("item1", "item1", new Date(), false, account);
         store.add(item);
         assertThat(item.getId() > 0).isTrue();
     }
 
     @Test
     public void replace() {
-        Item item = new Item("item1", "item1", LocalDate.now(), false, account);
+        Item item = new Item("item1", "item1", new Date(), false, account);
         store.add(item);
         long id = item.getId();
         assertThat(
                 store.replace(id,
-                        new Item("item2", "item1", LocalDate.now(), false, account))
+                        new Item("item2", "item1", new Date(), false, account))
         ).isTrue();
         item = store.findById(id);
         assertThat(item.getTitle()).isEqualTo("item2");
@@ -55,7 +55,7 @@ public class ItemStoreTest {
 
     @Test
     public void delete() {
-        Item item = new Item("item1", "item1", LocalDate.now(), false, account);
+        Item item = new Item("item1", "item1", new Date(), false, account);
         store.add(item);
         long id = item.getId();
         assertThat(store.delete(id)).isTrue();
@@ -73,8 +73,8 @@ public class ItemStoreTest {
         assertThat(list)
                 .extracting("title", String.class)
                 .doesNotContain("A", "B");
-        store.add(new Item("A", "item1", LocalDate.now(), false, account));
-        store.add(new Item("B", "item1", LocalDate.now(), false, account));
+        store.add(new Item("A", "item1", new Date(), false, account));
+        store.add(new Item("B", "item1", new Date(), false, account));
         list = store.findAll();
         assertThat(list)
                 .extracting("title", String.class)
@@ -84,13 +84,13 @@ public class ItemStoreTest {
     @Test
     public void findByName() {
         assertThat(store.findByName("A1")).isEmpty();
-        store.add(new Item("A1", "item1", LocalDate.now(), false, account));
+        store.add(new Item("A1", "item1", new Date(), false, account));
         assertThat(store.findByName("A1")).hasSize(1);
     }
 
     @Test
     public void findById() {
-        Item item = store.add(new Item("A", "item1", LocalDate.now(), false, account));
+        Item item = store.add(new Item("A", "item1", new Date(), false, account));
         long id = item.getId();
         Item item1 = store.findById(id);
         assertThat(item).isEqualTo(item1);
