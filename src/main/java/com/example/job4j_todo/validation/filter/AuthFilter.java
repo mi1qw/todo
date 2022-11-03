@@ -1,4 +1,4 @@
-package com.example.job4j_todo.filter;
+package com.example.job4j_todo.validation.filter;
 
 import com.example.job4j_todo.web.UserSession;
 import jakarta.servlet.*;

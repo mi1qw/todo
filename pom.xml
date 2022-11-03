@@ -113,7 +113,7 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+                            <changeLogFile>db/master.xml</changeLogFile>
                             <url>${db.url}</url>
                             <driver>${db.driver}</driver>
                             <username>${db.username}</username>
